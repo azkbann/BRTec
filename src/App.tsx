@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { MessageSquare, Globe2, Menu, X, Sun, Moon, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Auth from './components/Auth';
 import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import Services from './components/Services';
-import logo from './assets/Logo-01.png';
+import Projects from './components/Projects';
+import About from './components/About';
+import Contact from './components/Contact';
+import Logo from "./assets/Logo.png"; // Importação correta da imagem
+import Logo1 from "./assets/Logo1.svg";
+
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -18,6 +23,10 @@ function App() {
     document.documentElement.classList.toggle('dark');
   };
 
+  const handleStartNow = () => {
+    setShowAuth(true);
+  };
+
   return (
     <Router>
       <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'dark bg-coffee-900' : 'bg-white'}`}>
@@ -25,7 +34,7 @@ function App() {
         <motion.nav 
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="fixed w-full z-50 backdrop-blur-lg bg-coffee-50/90 dark:bg-coffee-900/90 transition-colors duration-300 border-b border-coffee-200 dark:border-coffee-800"
+          className="fixed w-full z-50 bg-coffee-50/90 dark:bg-coffee-900/90 transition-colors duration-300 border-b border-coffee-200 dark:border-coffee-800"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16 items-center">
@@ -40,7 +49,7 @@ function App() {
               {/* Logo */}
               <Link to="/" className="flex-shrink-0 flex items-center">
                 <img 
-                  src={logo} 
+                  src={Logo} // Usando a variável importada
                   alt="Braavos Tecnologia" 
                   className="h-16 w-auto"
                 />
@@ -93,6 +102,9 @@ function App() {
         {/* Routes */}
         <Routes>
           <Route path="/services" element={<Services />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/" element={
             <>
               {/* Hero Section */}
@@ -127,10 +139,13 @@ function App() {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="flex flex-col sm:flex-row gap-4 justify-center"
                       >
-                        <Link to="/contact" className="inline-flex items-center px-8 py-3 border-2 border-coffee-400 bg-coffee-400 text-white hover:bg-transparent hover:text-coffee-400 transition-colors rounded-lg">
+                        <button
+                          onClick={handleStartNow}
+                          className="inline-flex items-center px-8 py-3 border-2 border-coffee-400 bg-coffee-400 text-white hover:bg-transparent hover:text-coffee-400 transition-colors rounded-lg"
+                        >
                           Começar Agora
                           <ChevronRight className="ml-2 h-5 w-5" />
-                        </Link>
+                        </button>
                         <Link to="/services" className="inline-flex items-center px-8 py-3 border-2 border-coffee-400 text-coffee-400 hover:bg-coffee-400 hover:text-white transition-colors rounded-lg">
                           Nossos Serviços
                         </Link>
@@ -178,8 +193,12 @@ function App() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div>
                 <div className="flex items-center space-x-2 mb-4">
-                  <img src={logo} alt="Braavos Tecnologia" className="h-8 w-auto" />
-                  <span className="logo-text text-white">Braavos</span>
+                  <img 
+                    src={Logo1} // Usando a variável importada
+                    alt="Braavos Tecnologia" 
+                    className="h-10 w-auto"
+                  />
+                  <span className="logo-text text-white"></span>
                 </div>
                 <p className="text-coffee-300">
                   Transformando o futuro através da tecnologia.
